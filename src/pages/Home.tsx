@@ -1,6 +1,8 @@
-import React from 'react';
+import axios from 'axios';
+import React,{useEffect, useState} from 'react';
 
 const Home:React.FC = () => {
+    const [teams,setTeams]=useState<[]>([])
     const cards:Array<{id:number,name:string}>=[
         {id:1,name:'card1'},
         {id:2,name:'card2'},
@@ -9,6 +11,17 @@ const Home:React.FC = () => {
         {id:5,name:'card5'},
         {id:6,name:'card6'},
     ]
+
+    useEffect(()=>{
+        const fetchTeams=async()=>{
+            const response=await axios.get('https://selise-json-server.onrender.com/teams');
+            setTeams(response.data)
+        }
+        fetchTeams();
+    },[])
+
+    console.log(teams)
+
     return (
         <div className={`w-[100vw] h-[100vh] p-[100px] overflow-hidden`}>
             <h1 className='text-center'>Home</h1>
