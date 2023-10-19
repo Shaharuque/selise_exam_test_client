@@ -15,7 +15,7 @@ export type TMenuList = {
 export const menuList: TMenuList[] = [
 	{ link: '/', icon: BiSolidHome, text: 'Home' },
 	{ link: '/dashboard', icon: RxDashboard, text: 'Dashboard' },
-	{ link: '/dashboard/mewao', icon: FaShippingFast, text: 'Shipment' },
+	{ link: '/toss', icon: FaShippingFast, text: 'Toss' },
 	{ link: '/tracking', icon: LuTimer, text: 'Tracking' },
 	{ link: '/payment', icon: MdOutlinePayment, text: 'Payment' },
 	{ link: '/block-chain', icon: AiOutlineFileDone, text: 'Blockchain Contacts' },

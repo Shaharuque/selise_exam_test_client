@@ -1,0 +1,2 @@
+for installing redux with typescript:
+npm install @types/react-redux react-redux @reduxjs/toolkit
