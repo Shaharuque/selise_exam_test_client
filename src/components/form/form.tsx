@@ -2,6 +2,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IVehicleInfo } from './vehicle.interface';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react'
+import { isParkingSlotAvailable } from '../../utils/overLapCheck';
 
 const defaultValues: IVehicleInfo = {
 	licenseNumber: '',
@@ -17,24 +19,54 @@ const defaultValues: IVehicleInfo = {
 
 const Form = () => {
 	const { handleSubmit, register, reset } = useForm<IVehicleInfo>({ defaultValues });
+	const [vehicleList, setVehicleList] = useState<IVehicleInfo[]>([])
+
+	useEffect(() => {
+		const fetchVehicleList = async () => {
+			try {
+				const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/vehicles`);
+				console.log('response', response?.data);
+				if (response?.data && response?.data?.length > 0) {
+					setVehicleList(response?.data);
+				}
+			} catch (error) {
+				console.log('Error', error);
+			}
+		};
+		fetchVehicleList();
+	}, []);
+
+	console.log('vehicles list in form',vehicleList)
+	
 
 	const onSubmit: SubmitHandler<IVehicleInfo> = async (data) => {
-		console.log('data', data);
-		try {
-			const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/vehicles`, data);
-			console.log('response', response);
-			if (response?.status === 201) {
-				toast.success("successfully filled up the form", {
-					position: "top-right",
-					autoClose: 5000,
-					hideProgressBar: false,
-					theme: "dark",
-					style: { fontSize: "15px" },
-				  });
-				reset(defaultValues);
+		const isAvailable = isParkingSlotAvailable(data?.entryDateTime, data?.exitDateTime, vehicleList);
+		console.log('isAvailable', isAvailable);
+		if(isAvailable){
+			try {
+				const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/vehicles`, data);
+				console.log('response', response);
+				if (response?.status === 201) {
+					toast.success("successfully filled up the form", {
+						position: "top-right",
+						autoClose: 5000,
+						hideProgressBar: false,
+						theme: "dark",
+						style: { fontSize: "15px" },
+					});
+					reset(defaultValues);
+				}
+			} catch (error) {
+				console.log('Error', error);
 			}
-		} catch (error) {
-			console.log('Error', error);
+		}else{
+			toast.error("Parking slot is not available", {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				theme: "dark",
+				style: { fontSize: "15px" },
+			});
 		}
 	};
 
