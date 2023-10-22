@@ -6,7 +6,7 @@ export interface IVehicleInfo {
 	status: 'in' | 'out';
 	ownerAddress: string;
 	entryDateTime: Date;
-	exitDateTime: Date;
+	exitDateTime: String;
 	parkingCharge: number;
 	id?: number;
 }

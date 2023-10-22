@@ -4,6 +4,7 @@ import ModalBack from './modalBack';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IVehicleInfo } from '../form/vehicle.interface';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 interface ModalInfoProps {
@@ -37,7 +38,15 @@ const EditModal: React.FC<ModalInfoProps> = ({ isModalOpen, handleCancel, id }) 
         try {
             const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/vehicles/${id}`, data);
             console.log('response', response);
-            if (response?.status === 201) {
+            if (response?.status === 200) {
+                handleCancel();
+                toast.success("successfully deleted from cart", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    theme: "dark",
+                    style: { fontSize: "15px" },
+                  });
                 reset(defaultValues);
             }
         } catch (error) {

@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { IVehicleInfo } from '../form/vehicle.interface';
 import EditModal from '../modal/EditModal';
 import moment from 'moment';
-
+import {AiOutlineEdit} from 'react-icons/ai';
+ 
 type TableProps = {
 	vehicleList: IVehicleInfo[];
     vehicleId: number | null | undefined;
@@ -36,17 +37,17 @@ export const Table = ({ vehicleList, vehicleId, isModalOpen,showModal ,handleCan
 					</tr>
 				</thead>
 				<tbody>
-					{vehicleList.map((entry, index) => (
+					{vehicleList?.map((entry, index) => (
 						<tr
 							key={index}
 							className="odd:bg-slate-50">
-							<td className="px-4 py-2 border">{entry.ownerName}</td>
-							<td className="px-4 py-2 border">{entry.vehicleType}</td>
-							<td className="px-4 py-2 border">{entry.licenseNumber}</td>
-							<td className="px-4 py-2 border">{moment(entry.entryDateTime, "YYYY-MM-DDTHH:mm").format("DD-MM-YYYY hh:mm A")}</td>
-							<td className="px-4 py-2 border">{moment(entry.exitDateTime, "YYYY-MM-DDTHH:mm").format("DD-MM-YYYY hh:mm A")}</td>
-							<td className="px-4 py-2 border">{entry.status}</td>
-							<td onClick={()=>showModal(entry?.id)} className="px-4 py-2 border cursor-pointer">button</td>
+							<td className="px-4 py-2 border">{entry?.ownerName}</td>
+							<td className="px-4 py-2 border">{entry?.vehicleType}</td>
+							<td className="px-4 py-2 border">{entry?.licenseNumber}</td>
+							<td className="px-4 py-2 border">{moment(entry?.entryDateTime, "YYYY-MM-DDTHH:mm").format("DD-MM-YYYY hh:mm A")}</td>
+							<td className="px-4 py-2 border">{entry?.exitDateTime ? moment(entry?.exitDateTime, "YYYY-MM-DDTHH:mm").format("DD-MM-YYYY hh:mm A") : 'Not Exit Yet'}</td>
+							<td className="px-4 py-2 border">{entry?.status}</td>
+							<td onClick={()=>showModal(entry?.id)} className="px-4 py-2 border cursor-pointer"><AiOutlineEdit/></td>
 						</tr>
 					))}
 				</tbody>

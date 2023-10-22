@@ -37,7 +37,7 @@ const VehicleListPage = () => {
 
 	return (
 		<div className=" text-black">
-			<h2 className=" text-lg font-bold">List of vehicles</h2>
+			<h2 className=" text-lg font-bold text-center text-red-500">List of vehicles</h2>
 
 			{vehicleList && vehicleList.length > 0 ? <Table vehicleList={vehicleList} showModal={showModal} isModalOpen={isModalOpen} handleCancel={handleCancel} vehicleId={vehicleId}/> : <p>No data available!</p>}
 		</div>

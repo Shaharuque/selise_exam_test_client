@@ -4,6 +4,8 @@ import HomePage from './pages/Home/home';
 import Navbar from './components/navbar/navbar';
 import DashboardPage from './pages/Dashboard/dashboard';
 import VehicleListPage from './pages/List/vehicleList';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	return (
@@ -24,6 +26,7 @@ function App() {
 					/>
 				</Route>
 			</Routes>
+			<ToastContainer />
 		</Router>
 	);
 }

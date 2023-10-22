@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IVehicleInfo } from './vehicle.interface';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const defaultValues: IVehicleInfo = {
 	licenseNumber: '',
@@ -10,7 +11,7 @@ const defaultValues: IVehicleInfo = {
 	status: 'in',
 	ownerAddress: '',
 	entryDateTime: new Date(),
-	exitDateTime: new Date(),
+	exitDateTime: '',
 	parkingCharge: 0,
 };
 
@@ -19,15 +20,22 @@ const Form = () => {
 
 	const onSubmit: SubmitHandler<IVehicleInfo> = async (data) => {
 		console.log('data', data);
-		// try {
-		// 	const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/vehicles`, data);
-		// 	console.log('response', response);
-		// 	if (response?.status === 201) {
-		// 		reset(defaultValues);
-		// 	}
-		// } catch (error) {
-		// 	console.log('Error', error);
-		// }
+		try {
+			const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/vehicles`, data);
+			console.log('response', response);
+			if (response?.status === 201) {
+				toast.success("successfully filled up the form", {
+					position: "top-right",
+					autoClose: 5000,
+					hideProgressBar: false,
+					theme: "dark",
+					style: { fontSize: "15px" },
+				  });
+				reset(defaultValues);
+			}
+		} catch (error) {
+			console.log('Error', error);
+		}
 	};
 
 	return (
@@ -153,8 +161,8 @@ const Form = () => {
 							Exit Date and Time
 						</label>
 						<input
-							required
-							min={new Date().toISOString()}
+							// required
+							// min={new Date().toISOString()}
 							type="datetime-local"
 							id="exitDateTime"
 							{...register('exitDateTime')}
