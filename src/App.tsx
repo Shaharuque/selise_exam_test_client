@@ -1,26 +1,31 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Layout from './components/Layout/Layout';
-import Dashboard from './pages/Dashboard';
-import Test from './pages/Test';
-import Toss from './pages/Toss';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/Home/home';
+import Navbar from './components/navbar/navbar';
+import DashboardPage from './pages/Dashboard/dashboard';
+import VehicleListPage from './pages/List/vehicleList';
 
 function App() {
-
-  return (
-    <div>
-      <Router>
-          <Routes>
-            <Route path='/test' element={<Test/>}></Route>
-            <Route path='/' element={<Layout/>}>
-              <Route index element={<Home></Home>}></Route>
-              <Route path='dashboard' element={<Dashboard></Dashboard>}></Route>
-              <Route path='toss' element={<Toss></Toss>}></Route>
-            </Route>
-          </Routes>
-      </Router>
-    </div>
-  )
+	return (
+		<Router>
+			<Routes>
+				<Route element={<Navbar />}>
+					<Route
+						path="/"
+						element={<HomePage />}
+					/>
+					<Route
+						path="/vehicles"
+						element={<VehicleListPage />}
+					/>
+					<Route
+						path="/dashboard"
+						element={<DashboardPage />}
+					/>
+				</Route>
+			</Routes>
+		</Router>
+	);
 }
 
-export default App
+export default App;
