@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const Navbar = () => {
 	return (
@@ -6,15 +6,15 @@ const Navbar = () => {
 			<nav className="bg-gray-800 p-4 h-15">
 				<div className="container mx-auto flex justify-end items-center">
 					<ul className="flex space-x-4">
-						<a href="/">
+						<Link to="/">
 							<li className="text-white">Home</li>
-						</a>
-						<a href="/vehicles">
+						</Link>
+						<Link to="/vehicles">
 							<li className="text-white">Vehicles</li>
-						</a>
-						<a href="/dashboard">
+						</Link>
+						<Link to="/dashboard">
 							<li className="text-white">Dashboard</li>
-						</a>
+						</Link>
 					</ul>
 				</div>
 			</nav>
