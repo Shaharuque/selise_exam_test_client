@@ -36,37 +36,115 @@ const Form = () => {
 		fetchVehicleList();
 	}, []);
 
-	console.log('vehicles list in form',vehicleList)
-	
+	console.log('vehicles list in form', vehicleList)
+
 
 	const onSubmit: SubmitHandler<IVehicleInfo> = async (data) => {
-		const isAvailable = isParkingSlotAvailable(data?.entryDateTime, data?.exitDateTime, vehicleList);
-		console.log('isAvailable', isAvailable);
-		if(isAvailable){
-			try {
-				const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/vehicles`, data);
-				console.log('response', response);
-				if (response?.status === 201) {
-					toast.success("successfully filled up the form", {
-						position: "top-right",
-						autoClose: 5000,
-						hideProgressBar: false,
-						theme: "dark",
-						style: { fontSize: "15px" },
-					});
-					reset(defaultValues);
-				}
-			} catch (error) {
-				console.log('Error', error);
+		// const isAvailable = isParkingSlotAvailable(data?.entryDateTime, data?.exitDateTime, vehicleList);
+		// console.log('isAvailable', isAvailable);
+		// if(isAvailable){
+		// 	try {
+		// 		const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/vehicles`, data);
+		// 		console.log('response', response);
+		// 		if (response?.status === 201) {
+		// 			toast.success("successfully filled up the form", {
+		// 				position: "top-right",
+		// 				autoClose: 5000,
+		// 				hideProgressBar: false,
+		// 				theme: "dark",
+		// 				style: { fontSize: "15px" },
+		// 			});
+		// 			reset(defaultValues);
+		// 		}
+		// 	} catch (error) {
+		// 		console.log('Error', error);
+		// 	}
+		// }else{
+		// 	toast.error("Parking slot is not available", {
+		// 		position: "top-right",
+		// 		autoClose: 5000,
+		// 		hideProgressBar: false,
+		// 		theme: "dark",
+		// 		style: { fontSize: "15px" },
+		// 	});
+		// }
+
+		// try {
+		// 	// Define your headers
+		// 	const headers = {
+		//         "Host": "misterloo.seliselocal.com"
+		// 	};
+
+		// 	const postData = {
+		// 		grant_type: 'password_username',
+		// 		username: 'zaberahmed',
+		// 		password: '1234ABcd!!',
+		// 	}
+
+		// 	// Define the URL for your POST request
+		// 	const url = 'http://127.0.0.1:5000/user/auth';
+
+		// 	// Make a POST request with custom headers using Axios
+		// 	const response = await axios.post(url, postData, { headers });
+
+		// 	// Handle the response data
+		// 	console.log(response.data);
+		// 	localStorage.setItem('token', response.data.access_token);
+		//   } catch (error) {
+		// 	// Handle errors
+		// 	console.error('Error:', error);
+		//   }
+
+
+		//   try {
+		// 	// Define your headers
+		// 	const headers = {
+		//         "Host": "misterloo.seliselocal.com",
+		// 		"Origin":"http://misterloo.seliselocal.com",
+		// 		"Referer":"http://misterloo.seliselocal.com/login",
+		// 		"Authorization": `Bearer ${localStorage.getItem('token')}`
+		// 	};
+		// 	// Define the URL for your POST request
+		// 	const url = 'http://misterloo.seliselocal.com/api/identity/v20/identity/Authentication/GetLoggedInUser';
+
+		// 	// Make a POST request with custom headers using Axios
+		// 	const response = await axios.get(url, { headers });
+
+		// 	// Handle the response data
+		// 	console.log(response.data);
+		//   } catch (error) {
+		// 	// Handle errors
+		// 	console.error('Error:', error);
+		//   }
+
+
+		//   
+
+		try {
+			const fileId = "4f23068f-cceb-43e7-b9ae-eb129fbe66d0"
+			// const parsedUrl=await getImageUrl(fileId)
+			// console.log(parsedUrl)
+			const formData = {
+				"fileId": fileId
 			}
-		}else{
-			toast.error("Parking slot is not available", {
-				position: "top-right",
-				autoClose: 5000,
-				hideProgressBar: false,
-				theme: "dark",
-				style: { fontSize: "15px" },
-			});
+			// Define your headers
+			const headers = {
+				"token": `Bearer ${localStorage.getItem('token')}`,
+				"Content-Type": "application/json",
+				"Content-Length":"<calculated when request is sent>",
+				"Host": "<calculated when request is sent>",
+			};
+			// Define the URL for your POST request
+			const url = 'http://127.0.0.1:5000/storage/url/parser';
+
+			// Make a POST request with custom headers using Axios
+			const response = await axios.post(url,formData, { headers });
+
+			// Handle the response data
+			console.log(response.data);
+		} catch (error) {
+			// Handle errors
+			console.error('Error:', error);
 		}
 	};
 
